@@ -169,6 +169,11 @@ th {
 }
 .heightSection {
 	height: 29rem;
+	background-color: #d2d3c788;
+}
+.detailP,
+.detailImg {
+	background-color: #e18e659f !important;
 }
 @media screen and (max-width: 992px) {
 	#navbarNav a {
