@@ -1,7 +1,28 @@
 let cards = document.getElementById("cards");
 let fragment = document.createDocumentFragment();
-for (let evento of data) {
-	if (evento.date < currentDate) {
+let fragment2 = document.createDocumentFragment();
+const data = info.events;
+
+let categories = [];
+
+//Crear checkbox
+
+data.forEach((element) => {
+	if (!categories.includes(element.category)) {
+		categories.push(element.category);
+	}
+});
+categories.sort().forEach((category) => {
+	let label = document.createElement("label");
+	label.innerHTML += `<input type="checkbox"
+									name="${category}"								
+								/>${category}`;
+	fragment2.appendChild(label);
+});
+containerCheck.appendChild(fragment2);
+
+data.forEach((evento) => {
+	if (evento.date < info.currentDate) {
 		let div = document.createElement(`div`);
 		div.classList.add(`card`);
 		div.innerHTML += `<img
@@ -25,5 +46,6 @@ for (let evento of data) {
 					</div>`;
 		fragment.appendChild(div);
 	}
-}
+});
+
 cards.appendChild(fragment);

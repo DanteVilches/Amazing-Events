@@ -175,6 +175,9 @@ th {
 .detailImg {
 	background-color: #e18e659f !important;
 }
+#btnContact:hover {
+	border: 1px solid black;
+}
 @media screen and (max-width: 992px) {
 	#navbarNav a {
 		background-color: transparent;
