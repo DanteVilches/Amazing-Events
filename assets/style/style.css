@@ -3,6 +3,9 @@
 	width: fit-content;
 	color: white;
 }
+.article {
+	height: fit-content !important;
+}
 .bi-search {
 	transform: scaleX(-1);
 	border: black 1px solid;
@@ -233,5 +236,13 @@ th {
 	}
 	.sectionTable {
 		height: fit-content;
+	}
+	.icons {
+		gap: 0 !important;
+	}
+	.wpIcon,
+	.fbIcon,
+	.igIcon {
+		margin-right: 10px;
 	}
 }

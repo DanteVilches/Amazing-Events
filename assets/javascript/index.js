@@ -6,16 +6,16 @@ const data = info.events;
 let categories = [];
 
 //Crear checkbox
-
 data.forEach((element) => {
 	if (!categories.includes(element.category)) {
 		categories.push(element.category);
 	}
 });
+
 categories.sort().forEach((category) => {
 	let label = document.createElement("label");
 	label.innerHTML += `<input type="checkbox"
-									name="${category}"								
+									value="${category}"								
 								/>${category}`;
 	fragment2.appendChild(label);
 });
@@ -23,10 +23,12 @@ containerCheck.appendChild(fragment2);
 
 //Crear cards
 
-data.forEach((evento) => {
-	let div = document.createElement(`div`);
-	div.classList.add(`card`);
-	div.innerHTML += `<img
+function createCard(array) {
+	cards.innerHTML = "";
+	array.forEach((evento) => {
+		let div = document.createElement(`div`);
+		div.classList.add(`card`);
+		div.innerHTML += `<img
 						src="${evento.image}"
 						class="card-img-top"
 						alt="Image of ${evento.name}"
@@ -45,7 +47,49 @@ data.forEach((evento) => {
 							>More info...</a
 						>
 					</div>`;
-	fragment.appendChild(div);
-});
+		fragment.appendChild(div);
+	});
+	cards.appendChild(fragment);
+}
 
-cards.appendChild(fragment);
+//filtro checkbox
+
+function filterCheck() {
+	let checkboxes = document.querySelectorAll("input[type=checkbox]");
+	let arrayCheckboxes = Array.from(checkboxes);
+	let checkboxesSeleccionados = arrayCheckboxes.filter(
+		(checkbox) => checkbox.checked == true
+	);
+	let allChecks = checkboxesSeleccionados.map((checkbox) => checkbox.value);
+
+	let eventFilteredByCategory = [];
+
+	if (allChecks.length == 0) {
+		eventFilteredByCategory = data;
+		createCard(data);
+	} else {
+		eventFilteredByCategory = data.filter((evento) =>
+			allChecks.includes(evento.category)
+		);
+		createCard(eventFilteredByCategory);
+	}
+
+	return eventFilteredByCategory;
+}
+
+// filtro Searchbar
+let searchBar = document.querySelector("input[type=search]");
+
+function filterSearch() {
+	let filterInput = searchBar.value.toLowerCase();
+	let aux = [];
+	filterCheck().forEach((element) => {
+		if (element.name.toLocaleLowerCase().includes(filterInput)) {
+			aux.push(element);
+		}
+	});
+	createCard(aux);
+}
+
+containerCheck.addEventListener("change", filterCheck); // escucha check y modifica las card dependiendo del seleccionado
+createCard(data);
