@@ -79,7 +79,7 @@ function filterCheck() {
 
 // filtro Searchbar
 let searchBar = document.querySelector("input[type=search]");
-
+searchBar.addEventListener("keyup", filterSearch);
 function filterSearch() {
 	let filterInput = searchBar.value.toLowerCase().trim();
 	let aux = [];
