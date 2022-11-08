@@ -81,7 +81,7 @@ function filterCheck() {
 let searchBar = document.querySelector("input[type=search]");
 
 function filterSearch() {
-	let filterInput = searchBar.value.toLowerCase();
+	let filterInput = searchBar.value.toLowerCase().trim();
 	let aux = [];
 	filterCheck().forEach((element) => {
 		if (element.name.toLocaleLowerCase().includes(filterInput)) {
