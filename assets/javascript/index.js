@@ -3,24 +3,24 @@ let containerCheck = document.getElementById("containerCheck");
 let fragment2 = document.createDocumentFragment();
 let fragment = document.createDocumentFragment();
 const data = info.events;
-let categories = [];
 
 //Crear checkbox
-data.forEach((element) => {
-	if (!categories.includes(element.category)) {
-		categories.push(element.category);
-	}
-});
 
-categories.sort().forEach((category) => {
-	let label = document.createElement("label");
-	label.innerHTML += `<input type="checkbox"
+const fn = (category) => category.category;
+const categories = new Set(data.filter(fn).map(fn).sort());
+
+function createCheckbox(array, container) {
+	array.forEach((category) => {
+		let label = document.createElement("label");
+		label.innerHTML += `<input type="checkbox"
 									value="${category}"								
 								/>${category}`;
-	fragment2.appendChild(label);
-});
-containerCheck.appendChild(fragment2);
+		fragment2.appendChild(label);
+	});
+	container.appendChild(fragment2);
+}
 
+createCheckbox(categories, containerCheck);
 //Crear cards
 
 function createCard(array) {
@@ -42,7 +42,7 @@ function createCard(array) {
 							$ ${evento.price}
 						</h3>
 						<a
-							href="./details.html"
+							href="./details.html?id=${evento._id}"
 							class="btn btn-primary align-self-stretch "
 							>More info...</a
 						>
