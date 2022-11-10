@@ -80,7 +80,7 @@ containerCheck.addEventListener("change", () => {
 	const filteredEvents = eventFilterByCategory(eventsWithCategory, checked);
 	filteredEvents.length !== 0
 		? renderCards(filteredEvents, cards)
-		: (cards.innerHTML = "<h2>No hay eventos</h2>");
+		: (cards.innerHTML = "<h2>Select a category</h2>");
 });
 
 function eventFilterByCategory(events, categoriesSelected) {
