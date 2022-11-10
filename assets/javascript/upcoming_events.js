@@ -1,5 +1,6 @@
 let cards = document.getElementById("cards");
 let containerCheck = document.getElementById("containerCheck");
+let form = document.getElementById("formListen");
 const data = info.events;
 
 //Crear checkbox
@@ -114,3 +115,7 @@ function filterSearch() {
 
 	renderCards(aux, cards);
 }
+
+form.addEventListener("submit", (e) => {
+	e.preventDefault();
+});

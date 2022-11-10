@@ -3,6 +3,7 @@ let containerCheck = document.getElementById("containerCheck");
 let form = document.getElementById("formListen");
 const data = info.events;
 
+console.log([form]);
 //Crear checkbox
 
 const fn = (category) => category.category;
@@ -33,8 +34,7 @@ function createCard(evento) {
 	div.classList.add(`card`);
 	div.innerHTML += `<img src="${evento.image}"
 						class="card-img-top"
-						alt="Image of ${evento.name}"
-					/>
+						alt="Image of ${evento.name}"/>
 					<div class="card-body d-flex flex-column align-items-center">
 						<h3 class="card-title">${evento.name}</h3>
 						<p class="card-text">
@@ -112,5 +112,5 @@ function filterSearch() {
 	renderCards(aux, cards);
 }
 form.addEventListener("submit", (e) => {
-	e.preventDefault;
+	e.preventDefault();
 });
