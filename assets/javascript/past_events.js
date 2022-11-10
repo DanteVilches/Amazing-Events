@@ -24,7 +24,7 @@ function createCheckbox(array, container) {
 	container.innerHTML = aux;
 }
 
-createCheckbox(categoriesNoRepeat, containerCheck);
+createCheckbox(arrayCategoriesNoRepeat, containerCheck);
 
 //Crear cards
 
