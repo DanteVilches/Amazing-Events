@@ -55,7 +55,7 @@ function createCard(evento) {
 function renderCards(events, container) {
 	container.innerHTML = "";
 	if (events.length == 0) {
-		cards.innerHTML = `<h2>There are no events to show</h2>`;
+		cards.innerHTML = `<h2 class="mt-5 text-light bg-dark p-3">There are no events to show</h2>`;
 	} else {
 		let fragment = document.createDocumentFragment();
 		events.forEach((evento) => {
@@ -72,16 +72,21 @@ renderCards(eventsWithCategory, cards);
 
 //filtro checkbox
 
-containerCheck.addEventListener("change", () => {
+function filterCheck() {
 	const checked = Array.from(
 		document.querySelectorAll('input[type="checkbox"]:checked')
 	).map((input) => input.value);
 
 	const filteredEvents = eventFilterByCategory(eventsWithCategory, checked);
+
 	filteredEvents.length !== 0
 		? renderCards(filteredEvents, cards)
-		: (cards.innerHTML = "<h2>Select a category</h2>");
-});
+		: (cards.innerHTML = `<h2 class="mt-5 text-light bg-dark p-3">There are no events to show</h2>`);
+
+	return filteredEvents;
+}
+
+containerCheck.addEventListener("change", filterSearch);
 
 function eventFilterByCategory(events, categoriesSelected) {
 	let fn = (evento) =>
@@ -100,22 +105,15 @@ function filterSearch() {
 	let filterInput = searchBar.value.toLowerCase().trim();
 	let aux = [];
 
-	const checkeds = Array.from(
-		document.querySelectorAll('input[type="checkbox"]:checked')
-	).map((input) => input.value);
-
-	const filterCheck = eventFilterByCategory(eventsWithCategory, checkeds);
-	filterCheck.forEach((element) => {
+	filterCheck().forEach((element) => {
 		if (element.name.toLocaleLowerCase().includes(filterInput)) {
 			aux.push(element);
 		} else {
-			cards.innerHTML = "<h2>No hay eventos</h2>";
 		}
 	});
 
 	renderCards(aux, cards);
 }
-
 form.addEventListener("submit", (e) => {
 	e.preventDefault();
 });

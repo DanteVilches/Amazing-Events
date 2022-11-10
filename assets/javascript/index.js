@@ -25,7 +25,7 @@ function createCheckbox(array, container) {
 	container.innerHTML = aux;
 }
 
-createCheckbox(arrayCategoriesNoRepeat, containerCheck);
+createCheckbox(categoriesNoRepeat, containerCheck);
 
 //Crear cards
 
@@ -68,7 +68,7 @@ renderCards(eventsWithCategory, cards);
 
 //filtro checkbox
 
-containerCheck.addEventListener("change", () => {
+function filterCheck() {
 	const checked = Array.from(
 		document.querySelectorAll('input[type="checkbox"]:checked')
 	).map((input) => input.value);
@@ -78,7 +78,11 @@ containerCheck.addEventListener("change", () => {
 	filteredEvents.length !== 0
 		? renderCards(filteredEvents, cards)
 		: (cards.innerHTML = "<h2>There are no events to show</h2>");
-});
+
+	return filteredEvents;
+}
+
+containerCheck.addEventListener("change", filterSearch);
 
 function eventFilterByCategory(events, categoriesSelected) {
 	let fn = (evento) =>
@@ -97,13 +101,7 @@ function filterSearch() {
 	let filterInput = searchBar.value.toLowerCase().trim();
 	let aux = [];
 
-	const checkeds = Array.from(
-		document.querySelectorAll('input[type="checkbox"]:checked')
-	).map((input) => input.value);
-
-	const filterCheck = eventFilterByCategory(eventsWithCategory, checkeds);
-
-	filterCheck.forEach((element) => {
+	filterCheck().forEach((element) => {
 		if (element.name.toLocaleLowerCase().includes(filterInput)) {
 			aux.push(element);
 		} else {
