@@ -3,7 +3,6 @@ let containerCheck = document.getElementById("containerCheck");
 let form = document.getElementById("formListen");
 const data = info.events;
 
-console.log([form]);
 //Crear checkbox
 
 const fn = (category) => category.category;
