@@ -246,3 +246,9 @@ th {
 		margin-right: 10px;
 	}
 }
+
+@media screen and (min-width: 992px) and (max-width: 1327px) {
+	.fieldsetSearch {
+		margin-left: 16rem !important;
+	}
+}

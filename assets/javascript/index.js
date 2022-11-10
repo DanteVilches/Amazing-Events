@@ -1,35 +1,37 @@
 let cards = document.getElementById("cards");
 let containerCheck = document.getElementById("containerCheck");
-let fragment2 = document.createDocumentFragment();
-let fragment = document.createDocumentFragment();
+let form = document.getElementById("formListen");
 const data = info.events;
 
 //Crear checkbox
 
 const fn = (category) => category.category;
-const categories = new Set(data.filter(fn).map(fn).sort());
+const eventsWithCategory = data.filter(fn);
+const categories = eventsWithCategory.map(fn);
+const categoriesNoRepeat = new Set(categories);
+const arrayCategoriesNoRepeat = Array.from(categoriesNoRepeat);
 
 function createCheckbox(array, container) {
-	array.forEach((category) => {
-		let label = document.createElement("label");
-		label.innerHTML += `<input type="checkbox"
-									value="${category}"								
-								/>${category}`;
-		fragment2.appendChild(label);
-	});
-	container.appendChild(fragment2);
+	let aux = "";
+	array.forEach(
+		(value) =>
+			(aux += ` <label class="btn btn-dark active "><input type="checkbox"
+									value="${value}"								
+								/>${value}
+	 </label>`)
+	);
+
+	container.innerHTML = aux;
 }
 
-createCheckbox(categories, containerCheck);
+createCheckbox(categoriesNoRepeat, containerCheck);
+
 //Crear cards
 
-function createCard(array) {
-	cards.innerHTML = "";
-	array.forEach((evento) => {
-		let div = document.createElement(`div`);
-		div.classList.add(`card`);
-		div.innerHTML += `<img
-						src="${evento.image}"
+function createCard(evento) {
+	let div = document.createElement("div");
+	div.classList.add(`card`);
+	div.innerHTML += `<img src="${evento.image}"
 						class="card-img-top"
 						alt="Image of ${evento.name}"
 					/>
@@ -47,49 +49,68 @@ function createCard(array) {
 							>More info...</a
 						>
 					</div>`;
-		fragment.appendChild(div);
-	});
-	cards.appendChild(fragment);
+	return div;
 }
+
+function renderCards(events, container) {
+	container.innerHTML = "";
+	if (events.length == 0) {
+		cards.innerHTML = `<h2>There are no events to show</h2>`;
+	} else {
+		let fragment = document.createDocumentFragment();
+		events.forEach((evento) => fragment.appendChild(createCard(evento)));
+
+		container.appendChild(fragment);
+	}
+}
+
+renderCards(eventsWithCategory, cards);
 
 //filtro checkbox
 
-function filterCheck() {
-	let checkboxes = document.querySelectorAll("input[type=checkbox]");
-	let arrayCheckboxes = Array.from(checkboxes);
-	let checkboxesSeleccionados = arrayCheckboxes.filter(
-		(checkbox) => checkbox.checked == true
-	);
-	let allChecks = checkboxesSeleccionados.map((checkbox) => checkbox.value);
+containerCheck.addEventListener("change", () => {
+	const checked = Array.from(
+		document.querySelectorAll('input[type="checkbox"]:checked')
+	).map((input) => input.value);
 
-	let eventFilteredByCategory = [];
+	const filteredEvents = eventFilterByCategory(eventsWithCategory, checked);
+	filteredEvents.length !== 0
+		? renderCards(filteredEvents, cards)
+		: (cards.innerHTML = "<h2>No hay eventos</h2>");
+});
 
-	if (allChecks.length == 0) {
-		eventFilteredByCategory = data;
-		createCard(data);
-	} else {
-		eventFilteredByCategory = data.filter((evento) =>
-			allChecks.includes(evento.category)
-		);
-		createCard(eventFilteredByCategory);
-	}
-
-	return eventFilteredByCategory;
+function eventFilterByCategory(events, categoriesSelected) {
+	let fn = (evento) =>
+		categoriesSelected.includes(evento.category) ||
+		categoriesSelected.length === 0;
+	let filtered = events.filter(fn);
+	return filtered;
 }
 
 // filtro Searchbar
+
 let searchBar = document.querySelector("input[type=search]");
 searchBar.addEventListener("keyup", filterSearch);
+
 function filterSearch() {
 	let filterInput = searchBar.value.toLowerCase().trim();
 	let aux = [];
-	filterCheck().forEach((element) => {
+
+	const checkeds = Array.from(
+		document.querySelectorAll('input[type="checkbox"]:checked')
+	).map((input) => input.value);
+
+	const filterCheck = eventFilterByCategory(eventsWithCategory, checkeds);
+	filterCheck.forEach((element) => {
 		if (element.name.toLocaleLowerCase().includes(filterInput)) {
 			aux.push(element);
+		} else {
+			cards.innerHTML = "<h2>No hay eventos</h2>";
 		}
 	});
-	createCard(aux);
-}
 
-containerCheck.addEventListener("change", filterCheck); // escucha check y modifica las card dependiendo del seleccionado
-createCard(data);
+	renderCards(aux, cards);
+}
+form.addEventListener("submit", (e) => {
+	e.preventDefault;
+});
