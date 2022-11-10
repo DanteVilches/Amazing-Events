@@ -181,6 +181,14 @@ th {
 #btnContact:hover {
 	border: 1px solid black;
 }
+
+form > fieldset {
+	width: fit-content !important;
+	gap: 0px !important;
+	flex-wrap: wrap;
+	margin: 0px !important;
+}
+
 @media screen and (max-width: 992px) {
 	#navbarNav a {
 		background-color: transparent;

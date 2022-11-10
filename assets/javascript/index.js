@@ -55,7 +55,7 @@ function createCard(evento) {
 function renderCards(events, container) {
 	container.innerHTML = "";
 	if (events.length == 0) {
-		cards.innerHTML = `<h2>There are no events to show</h2>`;
+		cards.innerHTML = `<h2 class="mt-5 text-light bg-dark p-3">There are no events to show</h2>`;
 	} else {
 		let fragment = document.createDocumentFragment();
 		events.forEach((evento) => fragment.appendChild(createCard(evento)));
@@ -74,9 +74,10 @@ containerCheck.addEventListener("change", () => {
 	).map((input) => input.value);
 
 	const filteredEvents = eventFilterByCategory(eventsWithCategory, checked);
+
 	filteredEvents.length !== 0
 		? renderCards(filteredEvents, cards)
-		: (cards.innerHTML = "<h2>No hay eventos</h2>");
+		: (cards.innerHTML = "<h2>There are no events to show</h2>");
 });
 
 function eventFilterByCategory(events, categoriesSelected) {
@@ -101,11 +102,11 @@ function filterSearch() {
 	).map((input) => input.value);
 
 	const filterCheck = eventFilterByCategory(eventsWithCategory, checkeds);
+
 	filterCheck.forEach((element) => {
 		if (element.name.toLocaleLowerCase().includes(filterInput)) {
 			aux.push(element);
 		} else {
-			cards.innerHTML = "<h2>No hay eventos</h2>";
 		}
 	});
 
