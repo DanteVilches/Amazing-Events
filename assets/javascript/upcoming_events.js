@@ -1,16 +1,38 @@
 let cards = document.getElementById("cards");
 let containerCheck = document.getElementById("containerCheck");
 let form = document.getElementById("formListen");
-const data = info.events;
-
+let info;
+let data;
 //Crear checkbox
+let fn = (category) => category.category;
+let eventsWithCategory;
+let categories;
+let categoriesNoRepeat;
+let arrayCategoriesNoRepeat;
+fetch("https://amazing-events.herokuapp.com/api/events")
+	.then((response) => response.json())
+	.then((json) => {
+		info = json;
+		data = info.events;
 
-const fn = (category) => category.category;
-const eventsWithCategory = data.filter(fn);
-const categories = eventsWithCategory.map(fn);
-const categoriesNoRepeat = new Set(categories);
-const arrayCategoriesNoRepeat = Array.from(categoriesNoRepeat);
+		execute();
+	})
+	.catch((error) => console.log(error));
 
+function execute() {
+	eventsWithCategory = data.filter(fn);
+	categories = eventsWithCategory.map(fn);
+	categoriesNoRepeat = new Set(categories);
+	arrayCategoriesNoRepeat = Array.from(categoriesNoRepeat);
+	createCheckbox(arrayCategoriesNoRepeat, containerCheck);
+	renderCards(eventsWithCategory, cards);
+	containerCheck.addEventListener("change", filterSearch);
+
+	searchBar.addEventListener("keyup", filterSearch);
+}
+form.addEventListener("submit", (e) => {
+	e.preventDefault();
+});
 function createCheckbox(array, container) {
 	let aux = "";
 	array.forEach(
@@ -23,9 +45,6 @@ function createCheckbox(array, container) {
 
 	container.innerHTML = aux;
 }
-
-createCheckbox(arrayCategoriesNoRepeat, containerCheck);
-
 //Crear cards
 
 function createCard(evento) {
@@ -68,8 +87,6 @@ function renderCards(events, container) {
 	}
 }
 
-renderCards(eventsWithCategory, cards);
-
 //filtro checkbox
 
 function filterCheck() {
@@ -86,8 +103,6 @@ function filterCheck() {
 	return filteredEvents;
 }
 
-containerCheck.addEventListener("change", filterSearch);
-
 function eventFilterByCategory(events, categoriesSelected) {
 	let fn = (evento) =>
 		categoriesSelected.includes(evento.category) ||
@@ -99,7 +114,6 @@ function eventFilterByCategory(events, categoriesSelected) {
 // filtro Searchbar
 
 let searchBar = document.querySelector("input[type=search]");
-searchBar.addEventListener("keyup", filterSearch);
 
 function filterSearch() {
 	let filterInput = searchBar.value.toLowerCase().trim();
@@ -114,6 +128,3 @@ function filterSearch() {
 
 	renderCards(aux, cards);
 }
-form.addEventListener("submit", (e) => {
-	e.preventDefault();
-});
