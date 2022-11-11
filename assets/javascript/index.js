@@ -14,7 +14,6 @@ fetch("https://amazing-events.herokuapp.com/api/events")
 	.then((json) => {
 		info = json;
 		data = info.events;
-
 		execute();
 	})
 	.catch((error) => console.log(error));
