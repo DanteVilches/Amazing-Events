@@ -59,7 +59,7 @@ function execute() {
 		new Set(eventsWithCategoryUpcoming.map(fn))
 	);
 
-	upcomingCategoriesNoRepeat.forEach((category) => {
+	upcomingCategoriesNoRepeat.sort().forEach((category) => {
 		let obj = {
 			name: "",
 			revenue: 0,

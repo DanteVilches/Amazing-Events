@@ -3,6 +3,7 @@ let containerCheck = document.getElementById("containerCheck");
 let form = document.getElementById("formListen");
 let info;
 let data;
+let upcomingEvents;
 //Crear checkbox
 let fn = (category) => category.category;
 let eventsWithCategory;
@@ -20,7 +21,8 @@ fetch("https://amazing-events.herokuapp.com/api/events")
 	.catch((error) => console.log(error));
 
 function execute() {
-	eventsWithCategory = data.filter(fn);
+	upcomingEvents = data.filter((event) => event.date > info.currentDate);
+	eventsWithCategory = upcomingEvents.filter(fn);
 	categories = eventsWithCategory.map(fn);
 	categoriesNoRepeat = new Set(categories);
 	arrayCategoriesNoRepeat = Array.from(categoriesNoRepeat);

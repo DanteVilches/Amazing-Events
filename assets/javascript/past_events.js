@@ -9,6 +9,7 @@ let eventsWithCategory;
 let categories;
 let categoriesNoRepeat;
 let arrayCategoriesNoRepeat;
+let pastEvents;
 fetch("https://amazing-events.herokuapp.com/api/events")
 	.then((response) => response.json())
 	.then((json) => {
@@ -20,7 +21,9 @@ fetch("https://amazing-events.herokuapp.com/api/events")
 	.catch((error) => console.log(error));
 
 function execute() {
-	eventsWithCategory = data.filter(fn);
+	pastEvents = data.filter((event) => event.date < info.currentDate);
+
+	eventsWithCategory = pastEvents.filter(fn);
 	categories = eventsWithCategory.map(fn);
 	categoriesNoRepeat = new Set(categories);
 	arrayCategoriesNoRepeat = Array.from(categoriesNoRepeat);
