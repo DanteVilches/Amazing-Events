@@ -20,6 +20,7 @@
 	width: fit-content;
 	color: white;
 }
+
 .article {
 	height: fit-content !important;
 }
@@ -146,7 +147,7 @@ footer {
 }
 
 .sectionTable {
-	height: 40rem;
+	height: fit-content;
 }
 body {
 	background-image: url(../images/minimalism_geometric_landscape_124072_3840x2400.jpg);
