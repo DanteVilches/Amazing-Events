@@ -60,7 +60,7 @@ function execute() {
 		new Set(eventsWithCategoryUpcoming.map(fn))
 	);
 
-	function createObj(arrayNoRepeat, arrayUpcomingPast, objName) {
+	function createObj(arrayNoRepeat, arrayUpcomingOrPast, objName) {
 		arrayNoRepeat.sort().forEach((category) => {
 			let obj = {
 				name: "",
@@ -69,25 +69,25 @@ function execute() {
 			};
 
 			obj.name = category;
-			obj.revenue = arrayUpcomingPast
+			obj.revenue = arrayUpcomingOrPast
 				.filter((events) => events.category == category)
 				.map((events) => events.revenue)
 				.reduce((a, b) => a + b, 0);
 
 			obj.percentage =
-				arrayUpcomingPast
+				arrayUpcomingOrPast
 					.filter((events) => events.category == category)
 					.map((events) => events.percentage)
 					.reduce((a, b) => a + b, 0) /
-				arrayUpcomingPast.filter((events) => events.category == category).length;
+				arrayUpcomingOrPast.filter((events) => events.category == category).length;
 			objName.push(obj);
 		});
 	}
 	createObj(upcomingCategoriesNoRepeat, upcomingEvents, objCategoriesUpcoming);
 	createObj(pastCategoriesNoRepeat, pastEvents, objCategoriesPast);
 
-	function createTableRow(objUpcomingPast, container) {
-		objUpcomingPast.forEach((event) => {
+	function createTableRow(objUpcomingOrPast, container) {
+		objUpcomingOrPast.forEach((event) => {
 			container.innerHTML += `
 		<tr>
 			<td>${event.name}</td>
