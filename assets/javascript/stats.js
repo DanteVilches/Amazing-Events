@@ -38,6 +38,7 @@ let pastCategoriesNoRepeat;
 let eventsWithCategoryUpcoming;
 let upcomingCategoriesNoRepeat;
 function execute() {
+	console.log(data);
 	pastEvents = data.filter((event) => event.date < info.currentDate);
 
 	upcomingEvents = data.filter((event) => event.date > info.currentDate);
@@ -60,11 +61,6 @@ function execute() {
 	);
 
 	function createObj(arrayNoRepeat, arrayUpcomingPast, objName) {
-		let obj = {
-			name: "",
-			revenue: 0,
-			percentage: 0,
-		};
 		arrayNoRepeat.sort().forEach((category) => {
 			let obj = {
 				name: "",
@@ -83,7 +79,7 @@ function execute() {
 					.filter((events) => events.category == category)
 					.map((events) => events.percentage)
 					.reduce((a, b) => a + b, 0) /
-				upcomingEvents.filter((events) => events.category == category).length;
+				arrayUpcomingPast.filter((events) => events.category == category).length;
 			objName.push(obj);
 		});
 	}
