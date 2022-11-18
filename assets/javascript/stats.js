@@ -61,7 +61,7 @@ function execute() {
 	);
 
 	function createObj(arrayNoRepeat, arrayUpcomingOrPast, objName) {
-		arrayNoRepeat.sort().forEach((category) => {
+		objName = arrayNoRepeat.sort().map((category) => {
 			let obj = {
 				name: "",
 				revenue: 0,
