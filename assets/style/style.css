@@ -1,7 +1,28 @@
+.loader {
+	border: 16px solid #f3f3f3; /* Light grey */
+	border-top: 16px solid #db7280; /* Blue */
+	border-radius: 50%;
+	width: 120px;
+	height: 120px;
+	animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
 #navbarNav a {
 	border: solid 1px white;
 	width: fit-content;
 	color: white;
+}
+
+.article {
+	height: fit-content !important;
 }
 .bi-search {
 	transform: scaleX(-1);
@@ -56,7 +77,6 @@
 }
 .card {
 	width: 20vw;
-	/* height: 80rem; */
 }
 #navbarNav li {
 	display: flex;
@@ -75,9 +95,6 @@ h1 {
 	font-family: "Cinzel", serif;
 	text-decoration: underline;
 }
-/* .sectionH1 {
-	border: solid 1px black;
-} */
 .divmainContact {
 	min-height: 50rem;
 }
@@ -130,7 +147,7 @@ footer {
 }
 
 .sectionTable {
-	height: 40rem;
+	height: fit-content;
 }
 body {
 	background-image: url(../images/minimalism_geometric_landscape_124072_3840x2400.jpg);
@@ -173,7 +190,23 @@ th {
 }
 .heightSection {
 	height: 29rem;
+	background-color: #d2d3c788;
 }
+.detailP,
+.detailImg {
+	background-color: #e18e659f !important;
+}
+#btnContact:hover {
+	border: 1px solid black;
+}
+
+form > fieldset {
+	width: fit-content !important;
+	gap: 0px !important;
+	flex-wrap: wrap;
+	margin: 0px !important;
+}
+
 @media screen and (max-width: 992px) {
 	#navbarNav a {
 		background-color: transparent;
@@ -229,5 +262,19 @@ th {
 	}
 	.sectionTable {
 		height: fit-content;
+	}
+	.icons {
+		gap: 0 !important;
+	}
+	.wpIcon,
+	.fbIcon,
+	.igIcon {
+		margin-right: 10px;
+	}
+}
+
+@media screen and (min-width: 992px) and (max-width: 1327px) {
+	.fieldsetSearch {
+		margin-left: 16rem !important;
 	}
 }
